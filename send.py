@@ -1,3 +1,4 @@
+import datetime
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -24,14 +25,15 @@ def content():
 
     today = datetime.datetime.now().strftime("%Y年%m月%d日")
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=f"根据中国浙江省杭州市萧山区{today}的天气，给我一个发给客户远哥的清晨问候语。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
+        model="gemini-2.5-pro",
+        contents=f"给我写一个发给客户远哥的清晨问候语，概括中国浙江省杭州市萧山区{today}的天气，包含正能量的每日一言等等，200字以内。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
         config=config
     )
     return response.text
 
 
 mail_host = 'smtp.163.com'
+# from 配置 import *
 # mail_user = MAIL_USER
 # mail_pass = MAIL_KEY
 # sender = MAIL_USER
@@ -52,11 +54,11 @@ try:
     for receiver in receivers:
         print("生成中。。。")
         content2 = content()
-        print("生成完毕", content2)
+        print("生成完毕", content2, "EOF")
         message = MIMEText(content2, 'plain', 'utf-8')
 
         # 邮件主题
-        message['Subject'] = f'测试邮件20250711'
+        message['Subject'] = f'{datetime.datetime.now().strftime("%Y年%m月%d日")}——早上好！'
 
         # 发送方信息
         message['From'] = sender
