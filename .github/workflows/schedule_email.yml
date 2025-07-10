@@ -28,7 +28,7 @@ jobs:
     - name: Run Python script # 第四步：运行你的脚本
       env:
         # 从GitHub Secrets中读取敏感信息
-        EMAIL_USER: ${{ secrets.EMAIL_USER }}
-        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+        API_KEY: ${{ secrets.API_KEY }}
+        MAIL_KEY: ${{ secrets.MAIL_KEY }}
+        MAIL_USER: ${{ secrets.MAIL_USER }}
       run: python send.py # 运行你的Python文件
