@@ -1,3 +1,2 @@
-smtplib
 datetime
 google-genai
