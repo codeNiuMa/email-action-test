@@ -6,6 +6,7 @@ on:
     # UTC时间是 1:00，所以北京时间 (UTC+8) 是 9:00
     - cron: '10 1 * * *'
     - cron: '10 8 * * *'
+    - cron: '10 12 * * *'
   workflow_dispatch: # 允许手动触发
 
 jobs:
