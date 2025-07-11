@@ -28,7 +28,7 @@ def content():
     today = datetime.datetime.now().strftime("%Y年%m月%d日")
     response = client.models.generate_content(
         model="gemini-2.5-pro",
-        contents=f"给我写一个发给客户远哥的清晨问候语，概括中国浙江省杭州市萧山区{today}的天气，包含正能量的每日一言等等，200字以内。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
+        contents=f"根据现在的时间，给我写一个发给客户远哥的上午或下午的问候语，概括中国浙江省杭州市萧山区{today}的天气，包含正能量的每日一言，适当添加emoji表情，200字以内。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
         config=config
     )
     return response.text
