@@ -28,7 +28,7 @@ def content():
     today = datetime.datetime.now().strftime("%Y年%m月%d日")
     response = client.models.generate_content(
         model="gemini-2.5-pro",
-        contents=f"根据现在的时间，给我写一个发给客户远哥的上午/下午/晚间的问候语，根据中国浙江省杭州市萧山区{today}的天气给出必要的提示，包含正能量的每日一言，适当添加emoji表情，200字以内。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
+        contents=f"根据此刻的时间，给我写一个发给客户远哥的上午或下午或晚间的问候语，根据中国浙江省杭州市萧山区{today}的天气给出必要的提示，包含正能量的每日一言，适当添加emoji表情，200字以内。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
         config=config
     )
     return response.text
@@ -65,8 +65,13 @@ try:
 
         message = MIMEText(content2, 'plain', 'utf-8')
 
-        # 邮件主题
-        message['Subject'] = f'{datetime.datetime.now().strftime("%Y年%m月%d日")}——早上好！'
+        # 根据UTC时间判断北京时间上下午晚上
+        if (datetime.datetime.utcnow().hour + 8) % 24 < 12:
+            message['Subject'] = f'{datetime.datetime.now().strftime("%Y年%m月%d日")}——上午好！'
+        elif (datetime.datetime.utcnow().hour + 8) % 24 < 18:
+            message['Subject'] = f'{datetime.datetime.now().strftime("%Y年%m月%d日")}——下午好！'
+        else:
+            message['Subject'] = f'{datetime.datetime.now().strftime("%Y年%m月%d日")}——晚上好！'
 
         # 发送方信息
         message['From'] = sender
