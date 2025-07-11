@@ -53,8 +53,13 @@ try:
     smtpObj.login(mail_user, mail_pass)
     for receiver in receivers:
         print("生成中。。。")
-        content2 = content()
-        print("生成完毕", content2, "EOF")
+        try:
+            content2 = content()
+            print("生成完毕", content2, "EOF")
+        except Exception as e:
+            print(f"生成内容时发生错误: {e}")
+            content2 = "生成内容时发生错误，请稍后再试。"
+
         message = MIMEText(content2, 'plain', 'utf-8')
 
         # 邮件主题
