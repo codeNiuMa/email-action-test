@@ -10,6 +10,8 @@ def content():
     from google import genai
     from google.genai import types
 
+    # from 配置 import API_KEY
+    # API_KEY = API_KEY
     API_KEY = os.environ.get("API_KEY")
     client = genai.Client(api_key=API_KEY)
 
@@ -37,6 +39,7 @@ mail_host = 'smtp.163.com'
 # mail_user = MAIL_USER
 # mail_pass = MAIL_KEY
 # sender = MAIL_USER
+# API_KEY = API_KEY
 mail_user = os.environ.get("MAIL_USER")
 mail_pass = os.environ.get("MAIL_KEY")
 sender = os.environ.get("MAIL_USER")
@@ -52,13 +55,13 @@ try:
     smtpObj = smtplib.SMTP_SSL(mail_host, 465)
     smtpObj.login(mail_user, mail_pass)
     for receiver in receivers:
-        print("生成中。。。")
+        print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] 生成中。。。\n")
         try:
             content2 = content()
-            print("生成完毕", content2, "EOF")
+            print("生成完毕\n", content2, "\n[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] EOF\n")
         except Exception as e:
-            print(f"生成内容时发生错误: {e}")
-            content2 = "生成内容时发生错误，请稍后再试。"
+            print(f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] 生成内容时发生错误: {e}\n")
+            content2 = f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] 生成内容时发生错误，请稍后再试。"
 
         message = MIMEText(content2, 'plain', 'utf-8')
 
