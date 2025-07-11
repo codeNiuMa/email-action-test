@@ -4,7 +4,7 @@ on:
   schedule:
     # 使用CRON表达式，表示在北京时间每天早上9点运行
     # UTC时间是 1:00，所以北京时间 (UTC+8) 是 9:00
-    - cron: '*/5 * * * *'
+    - cron: '10 1 * * *'
   workflow_dispatch: # 允许手动触发
 
 jobs:
