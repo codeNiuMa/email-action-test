@@ -52,8 +52,15 @@ names = ["远哥"]
 assert len(names) == len(receivers), "Names and receivers lists must have the same length."
 
 try:
+    print("获取MAIL_USER:", bool(os.environ.get("MAIL_USER")))
+    print("获取MAIL_KEY:", bool(os.environ.get("MAIL_KEY")))
+    print("获取API_KEY:", bool(os.environ.get("API_KEY")))
     for receiver in receivers:
-        smtpObj = smtplib.SMTP_SSL(mail_host, 465)
+        smtpObj = smtplib.SMTP(mail_host, 587, timeout=30)
+        smtpObj.set_debuglevel(1)  # 打印 SMTP 对话到日志
+        smtpObj.ehlo()
+        smtpObj.starttls()
+        smtpObj.ehlo()
         smtpObj.login(mail_user, mail_pass)
         print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] 生成中。。。")
         try:
@@ -83,5 +90,5 @@ try:
 
         smtpObj.quit()
     print(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} success')
-except smtplib.SMTPException as e:
+except Exception as e:
     print(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} 发送失败error', e)
