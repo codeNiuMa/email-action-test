@@ -23,13 +23,19 @@ def content():
 
     # Configure generation settings
     config = types.GenerateContentConfig(
-        tools=[grounding_tool]
+        tools=[grounding_tool],
+        system_instruction="你是一位专业的客户关系维护专家。请严格按照要求，为我的客户“远哥”生成一条问候语。",
     )
 
     today = datetime.datetime.now().strftime("%Y年%m月%d日")
     response = client.models.generate_content(
         model="gemini-2.5-pro",
-        contents=f"根据此刻的时间，给我写一个发给客户远哥的上午或下午或晚间的问候语，根据中国浙江省杭州市萧山区{today}的天气给出必要的提示，包含正能量的每日一言，适当添加emoji表情，200字以内。要求直接输出正文内容，删除掉多余的AI输出提示，可以直接用于发送给他人的邮件正文中。",
+        contents=f"""动态问候： 根据执行此任务的【此刻时间】，判断应使用“上午好”、“下午好”还是“晚上好”。
+                     天气关怀： 查询【中国浙江省杭州市萧山区{today}】的天气情况，并根据天气（如：晴天、雨天、高温、降温等）给出一句简短的贴心提醒。
+                     每日一言： 包含一句积极向上、充满正能量的句子。
+                     语气与风格： 亲切自然，并适当添加几个Emoji表情符号。
+                     字数限制： 总内容不超过200字。
+                     输出格式： 请务必直接输出最终生成的问候语正文，不要包含任何“好的”、“当然”或“这是为您生成的问候语”等多余的AI提示或说明文字，确保内容可以直接复制发送。""",
         config=config
     )
     return response.text
