@@ -63,15 +63,15 @@ try:
         smtpObj.login(mail_user, mail_pass)
         print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] 生成中。。。")
         try:
-            content = "测试内容"
-            # content2 = content()
-            print("生成完毕\n", content, f"\n[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] EOF")
+            # content = "测试内容"
+            content2 = content()
+            print("生成完毕\n", content2, f"\n[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] EOF")
         except Exception as e:
             print(f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] 生成内容时发生错误: {e}\n")
             content2 = f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] 生成内容时发生错误，请稍后再试。"
             content = content2
 
-        message = MIMEText(content, 'plain', 'utf-8')
+        message = MIMEText(content2, 'plain', 'utf-8')
 
         # 根据UTC时间判断北京时间上下午晚上
         if (datetime.datetime.utcnow().hour + 8) % 24 < 12:
