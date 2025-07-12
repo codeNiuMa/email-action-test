@@ -50,11 +50,11 @@ mail_host = 'smtp.163.com'
 # mail_pass = MAIL_KEY
 # sender = MAIL_USER
 # API_KEY = API_KEY
-# receivers = ['2325415123@qq.com']
+# receivers = ['']
 mail_user = os.environ.get("MAIL_USER")
 mail_pass = os.environ.get("MAIL_KEY")
 sender = os.environ.get("MAIL_USER")
-receivers = os.environ.get("RECEIVERS")
+receivers = os.getenv("RECEIVERS", "[]")
 names = os.environ.get("NAMES")
 
 try:
