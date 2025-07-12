@@ -30,7 +30,7 @@ def content():
     today = datetime.datetime.now().strftime("%Y年%m月%d日")
     response = client.models.generate_content(
         model="gemini-2.5-pro",
-        contents=f"""动态问候： 根据执行此任务的【此刻时间】，判断应使用“上午好”、“下午好”还是“晚上好”。
+        contents=f"""动态问候： 根据执行此任务的【此刻北京时间】，判断应使用“上午好”、“下午好”还是“晚上好”。
                      天气关怀： 查询【中国浙江省杭州市萧山区{today}】的天气情况，并根据天气（如：晴天、雨天、高温、降温等）给出一句简短的贴心提醒。
                      每日一言： 包含一句积极向上、充满正能量的句子。
                      语气与风格： 亲切自然，并适当添加几个Emoji表情符号。
