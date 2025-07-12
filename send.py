@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -47,21 +48,22 @@ mail_host = 'smtp.163.com'
 # mail_pass = MAIL_KEY
 # sender = MAIL_USER
 # API_KEY = API_KEY
+# receivers = ['2325415123@qq.com']
 mail_user = os.environ.get("MAIL_USER")
 mail_pass = os.environ.get("MAIL_KEY")
 sender = os.environ.get("MAIL_USER")
+receivers = os.environ.get("RECEIVERS")
 
-receivers = ['2325415123@qq.com']
-# 与收件人列表对应的姓名列表
-names = ["远哥"]
-
-# 确保名字和接收者列表长度相同
-assert len(names) == len(receivers), "Names and receivers lists must have the same length."
+try:
+    receivers = json.loads(receivers)
+except json.JSONDecodeError:
+    receivers = []
 
 try:
     print("获取MAIL_USER:", bool(os.environ.get("MAIL_USER")))
     print("获取MAIL_KEY:", bool(os.environ.get("MAIL_KEY")))
     print("获取API_KEY:", bool(os.environ.get("API_KEY")))
+    print("获取RECEIVERS:", bool(os.environ.get("RECEIVERS")))
     for receiver in receivers:
         print("1️⃣ 创建 SMTP 对象…")
         smtpObj = smtplib.SMTP_SSL(mail_host, 465, context=ssl.create_default_context(), timeout=30)
