@@ -1,20 +1,21 @@
-import datetime
 import json
 import os
 import smtplib
 from email.mime.text import MIMEText
 import ssl
+import datetime
+from google import genai
+from google.genai import types
 
 
 # 设置服务器所需信息
-def content():
-    import datetime
-    from google import genai
-    from google.genai import types
-
-    # from 配置 import API_KEY
+def content(name="远哥"):
+    # from 配置 import *
     # API_KEY = API_KEY
+    # LOCATION = LOCATION
     API_KEY = os.environ.get("API_KEY")
+    LOCATION = os.environ.get("LOCATION")
+
     client = genai.Client(api_key=API_KEY)
 
     # Define the grounding tool
@@ -25,14 +26,15 @@ def content():
     # Configure generation settings
     config = types.GenerateContentConfig(
         tools=[grounding_tool],
-        system_instruction="你是一位专业的客户关系维护专家。请严格按照要求，为我的客户“远哥”生成一条问候语。",
+        system_instruction=f"你是一位专业的客户关系维护专家。请严格按照要求，为我的客户“{name}”生成一条问候语。",
     )
 
     today = datetime.datetime.now().strftime("%Y年%m月%d日")
+
     response = client.models.generate_content(
         model="gemini-2.5-pro",
         contents=f"""动态问候： 根据执行此任务的【此刻北京时间】，判断应使用“上午好”、“下午好”还是“晚上好”。
-                     天气关怀： 查询【中国浙江省杭州市萧山区{today}】的天气情况，并根据天气（如：晴天、雨天、高温、降温等）给出一句简短的贴心提醒。
+                     天气关怀： 查询【{LOCATION}{today}】的天气情况，并根据天气（如：晴天、雨天、高温、降温等）给出一句简短的贴心提醒。
                      每日一言： 包含一句积极向上、充满正能量的句子。
                      语气与风格： 亲切自然，并适当添加几个Emoji表情符号。
                      字数限制： 总内容不超过200字。
@@ -53,6 +55,7 @@ mail_user = os.environ.get("MAIL_USER")
 mail_pass = os.environ.get("MAIL_KEY")
 sender = os.environ.get("MAIL_USER")
 receivers = os.environ.get("RECEIVERS")
+names = os.environ.get("NAMES")
 
 try:
     receivers = json.loads(receivers)
