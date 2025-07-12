@@ -34,4 +34,5 @@ jobs:
         MAIL_KEY: ${{ secrets.MAIL_KEY }}
         MAIL_USER: ${{ secrets.MAIL_USER }}
         RECEIVERS: ${{ secrets.RECEIVERS }}
+        LOCATION: ${{ secrets.LOCATION }}
       run: python send.py # 运行你的Python文件
