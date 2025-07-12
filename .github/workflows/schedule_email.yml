@@ -33,4 +33,5 @@ jobs:
         API_KEY: ${{ secrets.API_KEY }}
         MAIL_KEY: ${{ secrets.MAIL_KEY }}
         MAIL_USER: ${{ secrets.MAIL_USER }}
+        RECEIVERS: ${{ secrets.RECEIVERS }}
       run: python send.py # 运行你的Python文件
