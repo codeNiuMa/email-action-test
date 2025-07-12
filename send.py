@@ -2,6 +2,7 @@ import datetime
 import os
 import smtplib
 from email.mime.text import MIMEText
+import ssl
 
 
 # 设置服务器所需信息
@@ -56,11 +57,9 @@ try:
     print("获取MAIL_KEY:", bool(os.environ.get("MAIL_KEY")))
     print("获取API_KEY:", bool(os.environ.get("API_KEY")))
     for receiver in receivers:
-        smtpObj = smtplib.SMTP(mail_host, 587, timeout=30)
-        smtpObj.set_debuglevel(1)  # 打印 SMTP 对话到日志
-        smtpObj.ehlo()
-        smtpObj.starttls()
-        smtpObj.ehlo()
+        print("1️⃣ 创建 SMTP 对象…")
+        smtp = smtplib.SMTP_SSL(mail_host, 465, context=ssl.create_default_context(), timeout=30)
+        print("2️⃣ 登录…")
         smtpObj.login(mail_user, mail_pass)
         print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] 生成中。。。")
         try:
