@@ -52,13 +52,13 @@ names = ["远哥"]
 assert len(names) == len(receivers), "Names and receivers lists must have the same length."
 
 try:
-    smtpObj = smtplib.SMTP_SSL(mail_host, 465)
-    smtpObj.login(mail_user, mail_pass)
     for receiver in receivers:
-        print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] 生成中。。。\n")
+        smtpObj = smtplib.SMTP_SSL(mail_host, 465)
+        smtpObj.login(mail_user, mail_pass)
+        print(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] 生成中。。。")
         try:
             content2 = content()
-            print("生成完毕\n", content2, f"\n[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] EOF\n")
+            print("生成完毕\n", content2, f"\n[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] EOF")
         except Exception as e:
             print(f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] 生成内容时发生错误: {e}\n")
             content2 = f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] 生成内容时发生错误，请稍后再试。"
@@ -81,7 +81,7 @@ try:
 
         smtpObj.sendmail(sender, [receiver], message.as_string())
 
-    smtpObj.quit()
-    print('success')
+        smtpObj.quit()
+    print(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} success')
 except smtplib.SMTPException as e:
-    print('error', e)
+    print(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} 发送失败error', e)
